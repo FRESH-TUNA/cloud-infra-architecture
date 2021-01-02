@@ -1,3 +1,4 @@
+# subnet
 resource "aws_subnet" "scenario_2_public_1" {
   vpc_id = aws_vpc.scenario_2_vpc.id
   cidr_block = "172.16.0.0/28"

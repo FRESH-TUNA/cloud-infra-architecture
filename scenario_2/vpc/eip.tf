@@ -1,4 +1,0 @@
-resource "aws_eip" "lb" {
-  instance = aws_instance.scenario_1_ec2_logic.id
-  vpc      = true
-}

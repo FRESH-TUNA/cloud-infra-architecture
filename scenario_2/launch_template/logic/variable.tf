@@ -2,7 +2,7 @@ variable "key_name" {
   type = string
 }
 
-variable "allocation_id" {
+variable "eip_allocation_id" {
   type = string
 }
 

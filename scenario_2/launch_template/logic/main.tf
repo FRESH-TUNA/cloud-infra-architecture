@@ -1,7 +1,7 @@
 data "template_file" "asg_user_data" {
   template = "${file("${path.module}/user_data.sh")}"
   vars = {
-    ALLOCATION_ID = var.allocation_id
+    ALLOCATION_ID = var.eip_allocation_id
   }
 }
 

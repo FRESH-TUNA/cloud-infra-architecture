@@ -1,5 +1,6 @@
-resource "aws_route_table" "scenario_1_public_route_table" {
-  vpc_id = aws_vpc.scenario_1_vpc.id
+# route table
+resource "aws_route_table" "public" {
+  vpc_id = aws_vpc.scenario_2.id
 
   route {
     cidr_block = "0.0.0.0/0"
@@ -11,25 +12,36 @@ resource "aws_route_table" "scenario_1_public_route_table" {
   }
 }
 
-resource "aws_route_table" "scenario_1_private_route_table" {
-  vpc_id = aws_vpc.scenario_1_vpc.id
+resource "aws_route_table" "private" {
+  vpc_id = aws_vpc.scenario_2.id
 
   tags = {
     Name = "main"
   }
 }
 
-resource "aws_route_table_association" "scenario_1_public_rt_association" {
-  subnet_id      = aws_subnet.scenario-1-public-subnet.id
+# route table association
+resource "aws_route_table_association" "scenario_2_public_1" {
+  subnet_id      = aws_subnet.scenario_2_public_1.id
   route_table_id = aws_route_table.scenario_1_public_route_table.id
 }
 
-resource "aws_route_table_association" "scenario_1_private_rt_1_association" {
-  subnet_id      = aws_subnet.scenario-1-private-subnet.id
+resource "aws_route_table_association" "scenario_2_public_2" {
+  subnet_id      = aws_subnet.scenario_2_public_2.id
+  route_table_id = aws_route_table.scenario_1_public_route_table.id
+}
+
+resource "aws_route_table_association" "scenario_2_public_3" {
+  subnet_id      = aws_subnet.scenario_2_public_3.id
   route_table_id = aws_route_table.scenario_1_private_route_table.id
 }
 
-resource "aws_route_table_association" "scenario_1_private_rt_2_association" {
-  subnet_id      = aws_subnet.scenario-1-private-subnet-2.id
+resource "aws_route_table_association" "scenario_2_private_1" {
+  subnet_id      = aws_subnet.scenario_2_private_1.id
+  route_table_id = aws_route_table.scenario_1_private_route_table.id
+}
+
+resource "aws_route_table_association" "scenario_2_private_2" {
+  subnet_id      = aws_subnet.scenario_2_private_2.id
   route_table_id = aws_route_table.scenario_1_private_route_table.id
 }
