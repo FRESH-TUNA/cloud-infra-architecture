@@ -1,9 +1,9 @@
-data "template_file" "asg_user_data" {
-  template = "${file("${path.module}/user_data.sh")}"
-  vars = {
-    ALLOCATION_ID = var.eip_allocation_id
-  }
-}
+# data "template_file" "asg_user_data" {
+#   template = "${file("${path.module}/user_data.sh")}"
+#   vars = {
+#     ALLOCATION_ID = var.eip_allocation_id
+#   }
+# }
 
 resource "aws_launch_template" "logic" {
   name = "logic"
@@ -46,5 +46,5 @@ resource "aws_launch_template" "logic" {
     }
   }
 
-  user_data = template_file.asg_user_data
+  # user_data = template_file.asg_user_data
 }

@@ -14,6 +14,10 @@ module "vpc" {
   source = "./vpc"
 }
 
+module "igw" {
+  source = "./igw"
+}
+
 module "logic_eip" {
   source = "./eip/logic"
 }
@@ -26,8 +30,6 @@ module "logic_sg" {
   source = "./scg/logic"
   vpc_id = module.vpc.vpc_id
 }
-
-module ""
 
 module "logic_launch_template" {
   source = "./launch_template/logic"
