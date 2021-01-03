@@ -14,27 +14,23 @@ module "vpc" {
   source = "./vpc"
 }
 
-module "igw" {
-  source = "./igw"
-}
-
 module "logic_eip" {
   source = "./eip/logic"
 }
 
 module "logic_key" {
-  source = "./eip/logic"
+  source = "./key/logic"
 }
 
 module "logic_sg" {
-  source = "./scg/logic"
-  vpc_id = module.vpc.vpc_id
+  source = "./sg/logic"
+  vpc_id = module.vpc.id
 }
 
 module "logic_launch_template" {
   source = "./launch_template/logic"
-  key_name = module.logic_key.id
-  eip_allocation_id = module.logic_eip.key_name
+  key_name = module.logic_key.key_name
+  eip_allocation_id = module.logic_eip.allocation_id
   vpc_security_group_ids = [module.logic_sg.id]
 }
 
