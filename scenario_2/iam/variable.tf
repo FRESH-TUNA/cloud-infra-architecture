@@ -1,7 +1,7 @@
-variable "arn" {
-  type = string
+variable "account_id" {
+    type = string
 }
 
-variable "subnet_ids" {
-  type = list
+variable "eip_allocation_id" {
+    type = string
 }

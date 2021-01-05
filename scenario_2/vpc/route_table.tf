@@ -33,7 +33,7 @@ resource "aws_route_table_association" "scenario_2_public_2" {
 
 resource "aws_route_table_association" "scenario_2_public_3" {
   subnet_id      = aws_subnet.scenario_2_public_3.id
-  route_table_id = aws_route_table.private.id
+  route_table_id = aws_route_table.public.id
 }
 
 resource "aws_route_table_association" "scenario_2_private_1" {

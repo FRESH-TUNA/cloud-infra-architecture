@@ -1,15 +1,12 @@
-# data "template_file" "asg_user_data" {
-#   template = "${file("${path.module}/user_data.sh")}"
-#   vars = {
-#     ALLOCATION_ID = var.eip_allocation_id
-#   }
-# }
-
 resource "aws_launch_template" "logic" {
+  image_id = "ami-0094965d55b3bb1ff"
+
+  instance_type = "t2.micro"
+
   name = "logic"
 
   block_device_mappings {
-    device_name = "/dev/sda1"
+    device_name = "/dev/xvda"
 
     ebs {
       volume_size = 10
@@ -20,23 +17,9 @@ resource "aws_launch_template" "logic" {
     cpu_credits = "standard"
   }
 
-  disable_api_termination = true
-
-  ebs_optimized = true
-
-  image_id = "ami-0094965d55b3bb1ff"
-
-  instance_initiated_shutdown_behavior = "terminate"
-
-  instance_market_options {
-    market_type = "spot"
-  }
-
-  instance_type = "t2.micro"
-
   key_name = var.key_name
 
-  vpc_security_group_ids = var.vpc_security_group_ids
+  # vpc_security_group_ids = var.vpc_security_group_ids
 
   tag_specifications {
     resource_type = "instance"
@@ -46,5 +29,15 @@ resource "aws_launch_template" "logic" {
     }
   }
 
-  # user_data = template_file.asg_user_data
+  user_data = base64encode(templatefile("${path.module}/user_data.sh", 
+  { ALLOCATION_ID = var.eip_allocation_id }))
+
+  network_interfaces {
+    associate_public_ip_address = true
+    security_groups = var.vpc_security_group_ids
+  }
+
+  iam_instance_profile {
+    name = var.instance_profile_name
+  }
 }

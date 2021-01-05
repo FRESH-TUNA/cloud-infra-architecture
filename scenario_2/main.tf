@@ -10,6 +10,10 @@ provider "aws" {
   region = "ap-northeast-2"
 }
 
+module aws_caller_identity {
+  source = "./aws_caller_identity"
+}
+
 module "vpc" {
   source = "./vpc"
 }
@@ -27,11 +31,18 @@ module "logic_sg" {
   vpc_id = module.vpc.id
 }
 
+module "logic_iam_role" {
+  source = "./iam"
+  account_id = module.aws_caller_identity.account_id
+  eip_allocation_id = module.logic_eip.allocation_id
+}
+
 module "logic_launch_template" {
   source = "./launch_template"
   key_name = module.logic_key.key_name
   eip_allocation_id = module.logic_eip.allocation_id
   vpc_security_group_ids = [module.logic_sg.id]
+  instance_profile_name = module.logic_iam_role.instance_profile_name
 }
 
 module "logic_asg" {

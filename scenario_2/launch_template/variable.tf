@@ -9,3 +9,7 @@ variable "eip_allocation_id" {
 variable "vpc_security_group_ids" {
   type = list
 }
+
+variable "instance_profile_name" {
+  type = string
+}
