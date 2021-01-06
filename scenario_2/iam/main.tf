@@ -30,7 +30,7 @@ resource "aws_iam_policy" "ec2_associate_elasticip" {
             "Sid": "VisualEditor0",
             "Effect": "Allow",
             "Action": "ec2:AssociateAddress",
-            "Resource": "*"
+            "Resource": "*",
         },
         {
             "Sid": "AllowStsDecode",
